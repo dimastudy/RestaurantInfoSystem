@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/soft_gray_darker"
+    tools:context="com.justadroiddev.restrauntapp.presentation.ui.creationOrder.OrderCreatorFragment"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listDishes"
+            android:clipToPadding="true"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_order_creator"
+            android:layout_width="match_parent"
+            tools:visibility="gone"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/messageText"
+            android:text="@string/messageOrderListEmpty"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addDishBtn"
+            android:src="@drawable/ic_baseline_add_24"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+</FrameLayout>

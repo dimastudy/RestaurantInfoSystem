@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">RestrauntApp</string>
+    <string name="app_name">Ресторан</string>
+    <string name="messageOrderListEmpty">Список замовлених страв пустий. Щоб додати страву натисніть на плюсик та оберіть ставу, або перейдіть до вкладки меню та оберіть страву.</string>
 </resources>

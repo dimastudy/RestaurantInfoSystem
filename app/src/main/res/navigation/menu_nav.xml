@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menu_nav"
+    app:startDestination="@id/categoriesFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.justadroiddev.restrauntapp.presentation.ui.menu.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_dishDetailFragment"
+            app:destination="@id/dishDetailFragment" />
+        <argument
+            android:name="category"
+            app:argType="com.justadroiddev.restrauntapp.domain.CategoryDomain" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoriesFragment"
+        android:name="com.justadroiddev.restrauntapp.presentation.ui.menu.CategoriesFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dishDetailFragment"
+        android:name="com.justadroiddev.restrauntapp.presentation.ui.details.DishDetailFragment"
+        android:label="fragment_dish"
+        tools:layout="@layout/fragment_dish" >
+        <argument
+            android:name="dish"
+            app:argType="com.justadroiddev.restrauntapp.domain.DishDomain" />
+        <action
+            android:id="@+id/action_dishDetailFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
+    </fragment>
+</navigation>

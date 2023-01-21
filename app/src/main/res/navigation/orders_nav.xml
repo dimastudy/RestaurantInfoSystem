@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/orders_nav"
+    app:startDestination="@id/orderCreatorFragment">
+
+    <fragment
+        android:id="@+id/orderCreatorFragment"
+        android:name="com.justadroiddev.restrauntapp.presentation.ui.creationOrder.OrderCreatorFragment"
+        android:label="fragment_order_creator"
+        tools:layout="@layout/fragment_order_creator" >
+        <action
+            android:id="@+id/action_orderCreatorFragment_to_orderSubmitFragment"
+            app:destination="@id/orderSubmitFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderSubmitFragment"
+        android:name="com.justadroiddev.restrauntapp.presentation.ui.creationOrder.OrderSubmitFragment"
+        android:label="fragment_submit_order"
+        tools:layout="@layout/fragment_submit_order" />
+</navigation>

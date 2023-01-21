@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soft_gray_darker"
+    tools:context="com.justadroiddev.restrauntapp.presentation.ui.login.AccountFragment">
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="@color/soft_gray"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="-24dp"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:padding="4dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/ic_baseline_person_24"
+                tools:text="Dima" />
+
+            <TextView
+                android:id="@+id/userSecondName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:drawablePadding="-24dp"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:padding="4dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/ic_baseline_person_24"
+                tools:text="Peresunko" />
+
+            <TextView
+                android:id="@+id/userMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:drawablePadding="-24dp"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                android:padding="4dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/ic_baseline_email_24"
+                tools:text="dima@mail.com" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/ordersButton"
+        android:layout_marginBottom="4dp"
+        android:text="Мої замовлення"
+        android:textColor="@color/white"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/logOutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="164dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="Вийти"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
