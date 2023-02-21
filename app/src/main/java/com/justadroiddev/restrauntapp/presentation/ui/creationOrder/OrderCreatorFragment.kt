@@ -17,7 +17,9 @@ import com.justadroiddev.restrauntapp.databinding.FragmentOrderCreatorBinding
 import com.justadroiddev.restrauntapp.presentation.BaseFragment
 import com.justadroiddev.restrauntapp.presentation.adapters.OrderCreationAdapter
 import com.justadroiddev.restrauntapp.presentation.ui.findTopNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OrderCreatorFragment : BaseFragment<FragmentOrderCreatorBinding>(FragmentOrderCreatorBinding::inflate) {
 
     private val viewModel: OrderCreatorViewModel by viewModels()

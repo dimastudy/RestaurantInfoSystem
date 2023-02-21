@@ -1,6 +1,8 @@
 package com.justadroiddev.restrauntapp.presentation.ui.creationOrder
 
 import androidx.lifecycle.*
+import com.justadroiddev.restrauntapp.domain.usecases.ClearCachedDishesUseCase
+import com.justadroiddev.restrauntapp.domain.usecases.GetOrderPriceUseCase
 import com.justadroiddev.restrauntapp.domain.usecases.MakeOrderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -10,17 +12,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OrderSubmitViewModel @Inject constructor(
-    private val makeOrderUseCase: MakeOrderUseCase
+    private val makeOrderUseCase: MakeOrderUseCase,
+    private val clearCachedDishesUseCase: ClearCachedDishesUseCase,
+    private val getOrderPriceUseCase: GetOrderPriceUseCase
 ) : ViewModel() {
 
     private val resultLiveData = MutableLiveData<Boolean?>()
+    private val priceLiveData = MutableLiveData<Double?>()
 
     fun doneResult() {
         resultLiveData.value = null
+        priceLiveData.value = null
+    }
+
+    init {
+        viewModelScope.launch {
+            priceLiveData.value = getOrderPriceUseCase.invoke()
+        }
     }
 
     fun observeResult(lifecycleOwner: LifecycleOwner, observer: Observer<Boolean?>) {
         resultLiveData.observe(lifecycleOwner, observer)
+    }
+
+    fun observePrice(lifecycleOwner: LifecycleOwner, observer: Observer<Double?>){
+        priceLiveData.observe(lifecycleOwner, observer)
     }
 
     fun makeOrder(
@@ -36,7 +52,9 @@ class OrderSubmitViewModel @Inject constructor(
     }
 
     fun orderDone(){
-        OrderCreator.clearDishes()
+        viewModelScope.launch(Dispatchers.IO) {
+            clearCachedDishesUseCase.invoke()
+        }
     }
 
 

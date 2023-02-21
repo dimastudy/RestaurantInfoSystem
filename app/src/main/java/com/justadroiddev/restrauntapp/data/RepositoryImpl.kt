@@ -1,13 +1,15 @@
 package com.justadroiddev.restrauntapp.data
 
 import android.util.Log
+import com.justadroiddev.restrauntapp.data.database.CacheDataSource
 import com.justadroiddev.restrauntapp.data.network.CloudDataSource
 import com.justadroiddev.restrauntapp.data.network.DishPunkt
 import com.justadroiddev.restrauntapp.domain.*
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
-    private val cloudDataSource: CloudDataSource
+    private val cloudDataSource: CloudDataSource,
+    private val cacheDataSource: CacheDataSource
 ) : Repository {
     override suspend fun getDishesByCategory(categoryId: Int): ResultDomain<List<DishDomain>> {
         return try {
@@ -33,6 +35,15 @@ class RepositoryImpl @Inject constructor(
             ResultDomain.Error("Something went wrong")
         }
     }
+
+    override suspend fun getCachedDishes(): List<DishDomain> = cacheDataSource.getDishes()
+
+
+    override suspend fun saveDish(dishDomain: DishDomain) = cacheDataSource.saveDish(dishDomain)
+
+    override suspend fun removeDish(dishDomain: DishDomain) = cacheDataSource.removeDish(dishDomain)
+
+    override suspend fun clearDishes() = cacheDataSource.clear()
 
     override suspend fun registerNewUser(user: UserDomain) : Boolean{
          return try {
@@ -81,6 +92,10 @@ class RepositoryImpl @Inject constructor(
         } catch (e: Exception){
             ResultDomain.Error("Виникла помилка! Спробуйте пізніше")
         }
+    }
+
+    override suspend fun getOrderPrice(): Double {
+        return cacheDataSource.takeOrderPrice()
     }
 
 

@@ -7,15 +7,19 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.justadroiddev.restrauntapp.databinding.FragmentDishBinding
 import com.justadroiddev.restrauntapp.presentation.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.math.min
 
-
+@AndroidEntryPoint
 class DishDetailFragment : BaseFragment<FragmentDishBinding>(FragmentDishBinding::inflate) {
 
 
+    @Inject lateinit var factory: DishDetailViewModel.AssistedDishFactory
+
     private val viewModel: DishDetailViewModel by viewModels {
         val dish = DishDetailFragmentArgs.fromBundle(requireArguments()).dish
-        DishDetailViewModel.Factory(dish)
+        DishDetailViewModel.getFactory(dish, factory)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -14,14 +14,15 @@ class MakeOrderUseCase @Inject constructor(
         isDelivery: Boolean,
         tableNumber: Int
     ): Boolean {
-        if (!OrderCreator.takeDishes().isNullOrEmpty()){
+        val orderDishes = repository.getCachedDishes()
+        if (orderDishes.isNotEmpty()){
             return repository.makeAnOrder(
                 UserConsts.takeId()!!,
                 address,
                 deliveryDate,
                 isDelivery,
                 tableNumber,
-                OrderCreator.takeDishes()
+                orderDishes
             )
         }
         return false

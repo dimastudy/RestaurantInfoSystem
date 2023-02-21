@@ -1,12 +1,20 @@
 package com.justadroiddev.restrauntapp.presentation.ui.creationOrder
 
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.justadroiddev.restrauntapp.domain.DishDomain
+import com.justadroiddev.restrauntapp.domain.usecases.GetCachedDishesUseCase
+import com.justadroiddev.restrauntapp.domain.usecases.RemoveCachedDishUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class OrderCreatorViewModel : ViewModel() {
+@HiltViewModel
+class OrderCreatorViewModel @Inject constructor(
+    private val getCachedDishesUseCase: GetCachedDishesUseCase,
+    private val removeCachedDishUseCase: RemoveCachedDishUseCase
+) : ViewModel() {
 
     private val orderLiveData = MutableLiveData<List<DishDomain>?>()
 
@@ -15,12 +23,20 @@ class OrderCreatorViewModel : ViewModel() {
     }
 
     fun removeDish(dishDomain: DishDomain) {
-        OrderCreator.removeDish(dishDomain)
-        updateListDishes()
+        viewModelScope.launch {
+            val removeProcess =  async(Dispatchers.IO) {
+                removeCachedDishUseCase.invoke(dishDomain)
+            }
+            removeProcess.await()
+            updateListDishes()
+        }
+
     }
 
     fun updateListDishes() {
-        orderLiveData.value = OrderCreator.takeDishes()
+        viewModelScope.launch {
+            orderLiveData.value = getCachedDishesUseCase.invoke()
+        }
     }
 
     fun listDone(){

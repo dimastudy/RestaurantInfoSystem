@@ -1,6 +1,8 @@
 package com.justadroiddev.restrauntapp.di
 
 import com.justadroiddev.restrauntapp.data.RepositoryImpl
+import com.justadroiddev.restrauntapp.data.database.BaseCacheDataSource
+import com.justadroiddev.restrauntapp.data.database.CacheDataSource
 import com.justadroiddev.restrauntapp.data.network.BaseCloudDataSource
 import com.justadroiddev.restrauntapp.data.network.CloudDataSource
 import com.justadroiddev.restrauntapp.domain.Repository
@@ -15,6 +17,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
 
+    @Binds
+    @Singleton
+    abstract fun bindCacheDataSource(dataSource: BaseCacheDataSource) : CacheDataSource
 
     @Binds
     @Singleton

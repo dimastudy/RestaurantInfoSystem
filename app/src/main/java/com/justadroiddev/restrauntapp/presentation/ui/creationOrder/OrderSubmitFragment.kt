@@ -52,13 +52,11 @@ class OrderSubmitFragment :
             ).show()
         }
         binding.apply {
-            orderPrice.text = "Вартість замовлення: ${OrderCreator.takeOrderPrice()}$"
             listTables.adapter = arrayAdapter
             isDeliveryChecked(checkDelivery.isChecked)
             checkDelivery.setOnCheckedChangeListener { buttonView, isChecked ->
                 isDeliveryChecked(isChecked)
             }
-
             dateText.setOnClickListener {
                 DatePickerDialog(
                     requireContext(),
@@ -112,6 +110,12 @@ class OrderSubmitFragment :
                 }
             }
 
+        }
+
+        viewModel.observePrice(viewLifecycleOwner) { price ->
+            if (price != null){
+                binding.orderPrice.text = "Вартість замовлення: $price$"
+            }
         }
 
         viewModel.observeResult(viewLifecycleOwner) { result ->

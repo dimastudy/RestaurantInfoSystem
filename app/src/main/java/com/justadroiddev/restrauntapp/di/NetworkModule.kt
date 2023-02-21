@@ -1,6 +1,7 @@
 package com.justadroiddev.restrauntapp.di
 
 import com.justadroiddev.restrauntapp.data.RepositoryImpl
+import com.justadroiddev.restrauntapp.data.database.CacheDataSource
 import com.justadroiddev.restrauntapp.data.network.BaseCloudDataSource
 import com.justadroiddev.restrauntapp.data.network.CloudDataSource
 import com.justadroiddev.restrauntapp.data.network.RestaurantApi
@@ -43,7 +44,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRepository(cloudDataSource: CloudDataSource) : Repository = RepositoryImpl(cloudDataSource)
+    fun provideRepository(cloudDataSource: CloudDataSource, cacheDataSource: CacheDataSource) : Repository = RepositoryImpl(cloudDataSource, cacheDataSource)
 
 
 }

@@ -2,11 +2,17 @@ package com.justadroiddev.restrauntapp.presentation.ui.details
 
 import androidx.lifecycle.*
 import com.justadroiddev.restrauntapp.domain.DishDomain
+import com.justadroiddev.restrauntapp.domain.usecases.SaveDishUseCase
 import com.justadroiddev.restrauntapp.presentation.ui.creationOrder.OrderCreator
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class DishDetailViewModel(
-    private val dishDomain: DishDomain
-) : ViewModel() {
+class DishDetailViewModel @AssistedInject constructor(
+    @Assisted private val dishDomain: DishDomain,
+    private val saveDishUseCase: SaveDishUseCase
+    ) : ViewModel() {
 
     private val dishLiveData = MutableLiveData<DishDomain>()
 
@@ -17,7 +23,9 @@ class DishDetailViewModel(
     fun orderDish(count: Int, message: String){
         val dishOrdered = dishDomain.portionChange(count)
         dishOrdered.noteToDish(message)
-        OrderCreator.addDish(dishOrdered)
+        viewModelScope.launch(Dispatchers.IO) {
+            saveDishUseCase.invoke(dishOrdered)
+        }
     }
 
     init {
@@ -28,13 +36,23 @@ class DishDetailViewModel(
         dishLiveData.value = null
     }
 
-    class Factory(private val dishDomain: DishDomain) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DishDetailViewModel::class.java)){
-                return DishDetailViewModel(dishDomain) as T
+    companion object {
+        fun getFactory(
+            dishDomain: DishDomain,
+            factory: AssistedDishFactory
+        ) : ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(DishDetailViewModel::class.java)){
+                    return factory.getViewModel(dishDomain) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
             }
-            throw IllegalArgumentException("Unknown ViewModel class")
         }
+    }
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedDishFactory {
+        fun getViewModel(dishDomain: DishDomain) : DishDetailViewModel
     }
 
 }

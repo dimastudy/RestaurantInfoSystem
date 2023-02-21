@@ -2,6 +2,7 @@ package com.justadroiddev.restrauntapp.domain
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.justadroiddev.restrauntapp.data.database.DishEntity
 import com.justadroiddev.restrauntapp.data.network.DishPunkt
 import kotlinx.parcelize.Parcelize
 
@@ -30,6 +31,8 @@ data class DishDomain(
     fun mapToDishPunkt() = DishPunkt(portion, id, dishNotes)
 
     fun portionChange(count: Int) = DishDomain(dishName, id, ingredients, orderedCount, count, portionVariant, pricePerPortion, rating, category, dishImage)
+
+    fun mapToDishEntity() : DishEntity = DishEntity(dishName, id, ingredients, orderedCount, portion, portionVariant, pricePerPortion, rating, category, dishImage)
 
 
 }
